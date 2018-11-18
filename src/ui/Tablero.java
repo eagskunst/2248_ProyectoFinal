@@ -1,0 +1,53 @@
+package ui;
+
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+
+import listeners.BoxMouseListener;
+
+public class Tablero extends JPanel{
+	
+	public Tablero() {
+		setFocusable(true);
+		configurate();
+	}
+	
+	private void configurate() {
+		JPanel panel = new JPanel();
+
+        GridLayout layout = new GridLayout(7,5);
+        layout.setHgap(10);
+        layout.setVgap(10);
+        panel.setLayout(layout);
+		setLayout(new FlowLayout());
+		setBorder(BorderFactory.createEmptyBorder(50,50,50,50));
+		BoxImage[] boxes = new BoxImage[35];
+		int r = 1;
+		int c = 1;
+		for(int i = 0;i<boxes.length;i++) {
+			String number;
+			if(i%2 == 0)
+				number = "2";
+			else
+				number = "4";
+			boxes[i] = new BoxImage(number,r,c);
+			c++;
+			if(c==6) {
+				c=1;
+				r++;
+			}
+			boxes[i].changeBorder(false);
+		}
+		BoxMouseListener boxListener = new BoxMouseListener(boxes);
+		for(int i = 0;i<boxes.length;i++) {
+			boxes[i].addMouseListener(boxListener);
+		    panel.add(boxes[i]);
+		}
+		add(panel);
+	}
+	
+
+}
