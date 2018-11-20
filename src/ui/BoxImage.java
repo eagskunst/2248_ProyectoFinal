@@ -18,7 +18,16 @@ public class BoxImage extends JLabel implements Bordes{
 	private int number;
 	private int col;
 	private int row;
+	private boolean adding = false;
 		
+	public boolean isAdding() {
+		return adding;
+	}
+
+	public void setAdding(boolean isAdding) {
+		this.adding = isAdding;
+	}
+
 	public BoxImage(String number,int row, int col) {
 		super(number);
 		p = getLocation();
@@ -61,6 +70,20 @@ public class BoxImage extends JLabel implements Bordes{
 
 	public void setRow(int row) {
 		this.row = row;
+	}
+	
+	public Point getP() {
+		return p;
+	}
+
+	public void setP(Point p) {
+		this.p = p;
+	}
+
+	@Override
+	public String toString() {
+		return "BoxImage [compoundBorder=" + compoundBorder + ", p=" + p + ", number=" + number + ", col=" + col
+				+ ", row=" + row + ", adding=" + adding + "]";
 	}
 	
 	
