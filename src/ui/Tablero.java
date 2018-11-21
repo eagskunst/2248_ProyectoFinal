@@ -1,14 +1,10 @@
 package ui;
 
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 import listeners.BoxMouseListener;
 
@@ -47,28 +43,11 @@ public class Tablero extends JPanel{
 			}
 			boxes[i].changeBorder(false);
 		}
-		BoxMouseListener boxListener = new BoxMouseListener(boxes);
+		BoxMouseListener boxListener = new BoxMouseListener(boxes,panel);
 		for(int i = 0;i<boxes.length;i++) {
 			boxes[i].addMouseListener(boxListener);
 		    panel.add(boxes[i]);
 		}
-		
-		/*Timer t = new Timer(200, new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(count<8) {
-					System.out.println("entered");
-					Dimension d1 = boxes[5].getPreferredSize();
-					boxes[5].setBounds(boxes[5].getX(), boxes[5].getY()+5, d1.width, d1.height);
-					count++;
-					Dimension d = boxes[0].getPreferredSize();
-					boxes[0].setBounds(boxes[0].getX(), boxes[0].getY()+5, d.width, d.height);
-					
-				}
-			}
-		});
-		t.start();*/
 		add(panel);
 	}
 	
