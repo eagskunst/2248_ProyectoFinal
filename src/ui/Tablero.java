@@ -35,7 +35,7 @@ public class Tablero extends JPanel{
 				number = "2";
 			else
 				number = "4";
-			boxes[i] = new BoxImage(number,r,c);
+			boxes[i] = new BoxImage(number,r,c,i);
 			c++;
 			if(c==6) {
 				c=1;

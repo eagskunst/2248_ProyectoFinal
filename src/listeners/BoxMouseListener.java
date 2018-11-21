@@ -21,7 +21,7 @@ public class BoxMouseListener extends MouseAdapter implements MouseListener{
 	private static int sum;
 	private static BoxImage lastBox;
 	private static BoxImage previousBox;
-	private CustomTimer timers[] = new CustomTimer[6];
+	private CustomTimer timers[] = new CustomTimer[100];
 	private final int delay = 200;
 	private JPanel panel;
 	private int c = 0;
@@ -99,6 +99,7 @@ public class BoxMouseListener extends MouseAdapter implements MouseListener{
 	
 	private void changeAllBoxes() {
 		if(sum!= 0) {
+			CustomTimer.isAnimating = true;
 			lastBox.setNumber(sum);
 			lastBox.setAdding(false);
 			lastBox.changeBorder(false);

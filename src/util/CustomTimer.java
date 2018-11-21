@@ -25,7 +25,7 @@ public class CustomTimer extends Timer{
 	public void setRepetition(int repetition) {
 		this.repetition = repetition;
 	}
-	public void executeTransition(int j, BoxImage boxes[], JPanel panel,BoxImage lastBox) {
+	public void executeTransition(int j, BoxImage boxes[], JPanel panel, BoxImage lastBox) {
 		isAnimating = true;
 		boolean isLastBox = false;
 		this.col = j;
@@ -43,16 +43,24 @@ public class CustomTimer extends Timer{
 		}
 		else {
 			for(int k = j;k>=0;k-=5) {
-				if(boxes[k] == lastBox && !boxes[k].isAdding()) {
+				if(boxes[k].getId() == lastBox.getId()) {
 					System.out.println("entered is lastbox");
 					isLastBox = true;
-					col = lastBox.getNumber();
+					col = boxes[k].getNumber();
 				}
 				boxes[k].setAdding(false);
 				boxes[k].changeBorder(false);
 
-				if(k-5>=0)
-					boxes[k].setNumber(boxes[k-5].getNumber());
+				if(k-5>=0) {
+					if(boxes[k-5].isAdding()) {
+						if(k-10>=0) {
+							boxes[k].setNumber(boxes[k-10].getNumber());
+						}
+					}
+					else {
+						boxes[k].setNumber(boxes[k-5].getNumber());
+					}
+				}
 				else {
 					int r = rand.nextInt(3);
 					boxes[k].setNumber(r == 1 ? 2:4);
