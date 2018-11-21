@@ -19,6 +19,7 @@ public class BoxImage extends JLabel implements Bordes{
 	private int col;
 	private int row;
 	private boolean adding = false;
+	private int id;
 		
 	public boolean isAdding() {
 		return adding;
@@ -28,12 +29,13 @@ public class BoxImage extends JLabel implements Bordes{
 		this.adding = isAdding;
 	}
 
-	public BoxImage(String number,int row, int col) {
+	public BoxImage(String number,int row, int col,int id) {
 		super(number);
 		p = getLocation();
 		this.number = Integer.parseInt(number);
 		this.row = row;
 		this.col = col;
+		this.id = id;
 	}
 	
 	public void changeBorder(boolean touched) {
@@ -78,6 +80,14 @@ public class BoxImage extends JLabel implements Bordes{
 
 	public void setP(Point p) {
 		this.p = p;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Override

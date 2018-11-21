@@ -7,10 +7,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Random;
 
+import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import ui.BoxImage;
 import ui.Tablero;
+import util.CustomTimer;
 
 public class BoxMouseListener extends MouseAdapter implements MouseListener{
 	private boolean pressed = false;
@@ -19,10 +21,16 @@ public class BoxMouseListener extends MouseAdapter implements MouseListener{
 	private static int sum;
 	private static BoxImage lastBox;
 	private static BoxImage previousBox;
-	private Timer timers[] = new Timer[5];
+	private CustomTimer timers[] = new CustomTimer[100];
+	private final int delay = 200;
+	private JPanel panel;
+	private int c = 0;
+	private int firstValue;
 	
-	public BoxMouseListener(BoxImage[] boxes) {
+	
+	public BoxMouseListener(BoxImage[] boxes, JPanel panel) {
 		this.boxes = boxes;
+		this.panel = panel;
 	}
 	
 	@Override
@@ -32,16 +40,25 @@ public class BoxMouseListener extends MouseAdapter implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		BoxImage b = ((BoxImage)(e.getComponent()));
-		b.changeBorder(true);
-		pressed = true;
-		sum+= b.getNumber();
-		lastBox = b;
+		if(!CustomTimer.isAnimating) {
+			BoxImage b = ((BoxImage)(e.getComponent()));
+			b.changeBorder(true);
+			pressed = true;
+			sum+= b.getNumber();
+			firstValue = b.getNumber();
+			lastBox = b;
+		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		BoxImage b = ((BoxImage)(e.getComponent()));
 		pressed = false;
+		if(sum == firstValue) {
+			b.setAdding(false);
+			b.changeBorder(false);
+			sum = 0;
+		}
 		changeAllBoxes();
 	}
 
@@ -82,63 +99,30 @@ public class BoxMouseListener extends MouseAdapter implements MouseListener{
 	
 	private void changeAllBoxes() {
 		if(sum!= 0) {
+			CustomTimer.isAnimating = true;
 			lastBox.setNumber(sum);
 			lastBox.setAdding(false);
 			lastBox.changeBorder(false);
 			sum = 0;
 			int col = boxes.length-1;
-			
 			for(int i = col;i>col-5;i--) {
 				for(int j = i;j>=0;j-=5) {
 					if(boxes[j].isAdding()) {
-						for(int k = j;k>=0;k-=5) {
-							boxes[k].setAdding(false);
-							boxes[k].changeBorder(false);
-							if(k-5>=0)
-								boxes[k].setNumber(boxes[k-5].getNumber());
-							else {
-								int r = rand.nextInt(3);
-								System.out.println(r);
-								boxes[k].setNumber(r == 1 ? 2:4);
+						final int from = j;
+						final int c2 = c;
+						timers[c] = new CustomTimer(delay, new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								timers[c2].executeTransition(from,boxes,panel,lastBox);
 							}
-								
-						}
+						});
+						timers[c].start();
+						c++;
 					}
 				}
 			}
 		}
-		/*while(!checkedAllCols) {
-			boolean finded = false;
-			for(int i = col;i<=0 &&!finded;i-=10) {
-				if(boxes[i].isAdding()) {
-					startAnimation(i,8);
-					finded = true;
-				}
-			}
-			finded = false;
-			col--;
-		}*/
-/*		for(BoxImage b:boxes) {
-			b.changeBorder(false);
-			if(b.isAdding()) {
-				b.setAdding(false);
-				int num = (int) (Math.random()*3);
-				switch(num) {
-					case 0:
-						b.setNumber(2);
-						break;
-					case 1:
-						b.setNumber(4);
-						break;
-					case 2:
-						b.setNumber(8);
-						break;
-					case 3:
-						b.setNumber(16);
-						break;
-				}
-			}
-		}*/
+		c=0;
 
 	}
 
