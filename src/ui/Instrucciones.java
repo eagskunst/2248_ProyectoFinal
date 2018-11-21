@@ -15,7 +15,7 @@ public class Instrucciones extends JPanel {
 		setBackground(Color.WHITE);
 		
 		instrucciones=new JLabel();
-		instrucciones.setBounds(115,28, 300 , 300);
+		instrucciones.setBounds(105,28, 354 , 300);
 		instrucciones.setIcon(new ImageIcon("imagenes/instrucciones2.png") );
 		add(instrucciones);
 		add(inicio.atras);
