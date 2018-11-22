@@ -7,16 +7,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Random;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import sounds.Sounds;
 import ui.BoxImage;
 import ui.Tablero;
 import util.CustomTimer;
 
 public class BoxMouseListener extends MouseAdapter implements MouseListener{
 	private boolean pressed = false;
-	private Random rand = new Random();
 	private BoxImage[] boxes;
 	private static int sum;
 	private static BoxImage lastBox;
@@ -26,11 +27,13 @@ public class BoxMouseListener extends MouseAdapter implements MouseListener{
 	private JPanel panel;
 	private int c = 0;
 	private int firstValue;
+	private JLabel puntajeLabel;
 	
 	
-	public BoxMouseListener(BoxImage[] boxes, JPanel panel) {
+	public BoxMouseListener(BoxImage[] boxes, JPanel panel, JLabel puntajeLabel) {
 		this.boxes = boxes;
 		this.panel = panel;
+		this.puntajeLabel = puntajeLabel;
 	}
 	
 	@Override
@@ -47,6 +50,7 @@ public class BoxMouseListener extends MouseAdapter implements MouseListener{
 			sum+= b.getNumber();
 			firstValue = b.getNumber();
 			lastBox = b;
+			Sounds.initializePop(Sounds.ADD);
 		}
 	}
 
@@ -71,6 +75,7 @@ public class BoxMouseListener extends MouseAdapter implements MouseListener{
 		if(b.getNumber() == sum && pressed && !b.isAdding()) {
 			if( b.getRow()+1 == lastBox.getRow() || b.getRow()-1 == lastBox.getRow()  || b.getRow() == lastBox.getRow()) {
 				if(b.getCol()+1 == lastBox.getCol() || b.getCol()-1 == lastBox.getCol() || b.getCol() == lastBox.getCol()) {
+					Sounds.initializePop(Sounds.POP2);
 					b.changeBorder(true);
 					sum+=b.getNumber();
 					System.out.println(sum);
@@ -99,11 +104,12 @@ public class BoxMouseListener extends MouseAdapter implements MouseListener{
 	
 	private void changeAllBoxes() {
 		if(sum!= 0) {
+			Sounds.initializePop(Sounds.POP);
+			changePuntaje();
 			CustomTimer.isAnimating = true;
 			lastBox.setNumber(sum);
 			lastBox.setAdding(false);
 			lastBox.changeBorder(false);
-			sum = 0;
 			int col = boxes.length-1;
 			for(int i = col;i>col-5;i--) {
 				for(int j = i;j>=0;j-=5) {
@@ -121,11 +127,21 @@ public class BoxMouseListener extends MouseAdapter implements MouseListener{
 					}
 				}
 			}
+			
 		}
+		sum = 0;
 		c=0;
 
 	}
 
+	private void changePuntaje() {
+		int points = Integer.parseInt(puntajeLabel.getText().split(" ")[1]);
+		points+=sum;
+		String puntaje = Tablero.PUNTAJE + points;
+		puntajeLabel.setText(puntaje);
+	}
+	
+	
 
 
 }

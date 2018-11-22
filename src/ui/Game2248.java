@@ -7,6 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+
+import sounds.Sounds;
+
 import javax.swing.*;
 
 public class Game2248 extends JFrame{
@@ -16,6 +19,7 @@ public class Game2248 extends JFrame{
 	static Tablero tablero=new Tablero();
 	static Instrucciones inst=new Instrucciones();
 	static Creditos creditos=new Creditos();
+	public static Timer t;
 	
 	public static void main (String args[]) {
 		Game2248 game = new Game2248();
@@ -35,12 +39,13 @@ public class Game2248 extends JFrame{
 		
 		game.add(panel);
 		game.setLocationRelativeTo(null);
-		
+
         game.setVisible(true);
-        
+		Sounds.initializePop(Sounds.AMBIENCE);
+        startAmbience();
 	}
-	
-	
+
+
 	public Game2248() {
 		setTitle("2248");
 		setLayout(null);
@@ -61,7 +66,8 @@ public class Game2248 extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				card.show(panel, "2");
-				
+				tablero.requestFocusInWindow();
+				tablero.getT().start();
 			}
 		});
 		
@@ -109,6 +115,21 @@ public class Game2248 extends JFrame{
 		});
 		
 	}
-
+	
+	public static void regresar() {
+		card.show(panel, "1");
+	}
+	
+	
+	private static void startAmbience() {
+		t =new Timer(32000, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Sounds.initializePop(Sounds.AMBIENCE);
+			}
+		});
+		t.start();
+	}
 
 }
