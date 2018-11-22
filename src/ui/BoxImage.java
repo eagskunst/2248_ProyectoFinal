@@ -2,6 +2,7 @@ package ui;
 
 
 
+import java.awt.Color;
 import java.awt.Point;
 
 import javax.swing.JLabel;
@@ -36,14 +37,19 @@ public class BoxImage extends JLabel implements Bordes{
 		this.row = row;
 		this.col = col;
 		this.id = id;
+		setOpaque(true);
 	}
 	
 	public void changeBorder(boolean touched) {
 		if(!touched) {
 			compoundBorder = new CompoundBorder(untouchedBorder,margin);
+			setBackground(Color.WHITE.brighter());
 		}
-		else
+		else {
 			compoundBorder = new CompoundBorder(touchedBorder,margin);
+			setBackground(Color.RED.brighter());
+		}
+			
 		
 		setBorder(compoundBorder);
 	}

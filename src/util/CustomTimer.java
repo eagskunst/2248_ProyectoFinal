@@ -53,9 +53,8 @@ public class CustomTimer extends Timer{
 
 				if(k-5>=0) {
 					if(boxes[k-5].isAdding()) {
-						if(k-10>=0) {
-							boxes[k].setNumber(boxes[k-10].getNumber());
-						}
+						
+						boxes[k].setNumber(boxes[k-10].getNumber());
 					}
 					else {
 						boxes[k].setNumber(boxes[k-5].getNumber());
@@ -63,7 +62,7 @@ public class CustomTimer extends Timer{
 				}
 				else {
 					int r = rand.nextInt(3);
-					boxes[k].setNumber(r == 1 ? 2:4);
+					boxes[k].setNumber(r <= 1 ? 2:4);
 				}
 			}
 			if(isLastBox)

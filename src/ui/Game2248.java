@@ -11,6 +11,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.swing.JFrame;
+
+import sounds.Sounds;
+
 import javax.swing.*;
 
 public class Game2248 extends JFrame{
@@ -20,6 +24,8 @@ public class Game2248 extends JFrame{
 	static Tablero tablero=new Tablero();
 	static Instrucciones inst=new Instrucciones();
 	static Creditos creditos=new Creditos();
+	public static Timer t;
+
 	static Jugadores jugador=new Jugadores();
 	public static String aux,nombre;
 
@@ -43,12 +49,13 @@ public class Game2248 extends JFrame{
 		
 		game.add(panel);
 		game.setLocationRelativeTo(null);
-		
+
         game.setVisible(true);
-        
+		Sounds.initializePop(Sounds.AMBIENCE);
+        startAmbience();
 	}
-	
-	
+
+
 	public Game2248() {
 		setTitle("2248");
 		setLayout(null);
@@ -69,8 +76,9 @@ public class Game2248 extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				card.show(panel, "2");
+				tablero.requestFocusInWindow();
+				tablero.getT().start();
 				Nombre();
-				
 				
 			}
 		});
@@ -113,6 +121,7 @@ public class Game2248 extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				jugador.cargarJugadores();
 				card.show(panel, "5");
 				
 				
@@ -138,6 +147,21 @@ public class Game2248 extends JFrame{
 		
 	}
 	
+	public static void regresar() {
+		card.show(panel, "1");
+	}
+	
+	
+	private static void startAmbience() {
+		t =new Timer(32000, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Sounds.initializePop(Sounds.AMBIENCE);
+			}
+		});
+		t.start();
+	}
 	public static void Nombre() {
 		aux=(String)JOptionPane.showInputDialog(inicio,"Introducir Nombre: \n","Nombre.",JOptionPane.PLAIN_MESSAGE);
 		if(aux.length()>8) {
@@ -145,24 +169,21 @@ public class Game2248 extends JFrame{
 		}else {
 			nombre=aux;
 		}
-		System.out.println(nombre);
-		crearjugadores();
-		
+		System.out.println(nombre);		
 	}
 
 
-	public static void crearjugadores() {
+	public static void crearjugadores(String puntaje) {
 		// TODO Auto-generated method stub
 		
 		File archivo=new File("jugadores.txt");
 		try {
-			
-			
+				
 				FileWriter fw=new FileWriter("jugadores.txt",true);
 				BufferedWriter bw=new BufferedWriter(fw);
 				PrintWriter selarch=new PrintWriter(bw);
 				
-				selarch.print(nombre+"\n");
+				selarch.print(nombre+"-"+puntaje+"\n");
 			
 				selarch.close();
 	
