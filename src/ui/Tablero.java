@@ -13,6 +13,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -38,6 +39,7 @@ public class Tablero extends JPanel implements KeyListener{
 		setLayout(new FlowLayout(FlowLayout.CENTER,0,20));
 		setOpaque(true);
 		setBackground(Color.WHITE.brighter());
+
 	}
 	
 	private void configurate() {
