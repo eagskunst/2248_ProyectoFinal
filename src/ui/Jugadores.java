@@ -11,9 +11,9 @@ import javax.swing.JPanel;
 
 public class Jugadores extends JPanel {
 	private JLabel titulo;
-	private JLabel[] jugadores=new JLabel[10];
 	public Inicio inicio=new Inicio();
-	
+	JLabel[] jugadores=new JLabel[10];
+
 	public Jugadores() {
 		setLayout(null);
 		setSize(500, 400);
@@ -25,10 +25,28 @@ public class Jugadores extends JPanel {
 		titulo.setBounds(180, 50, 153, 40);
 		add(titulo);
 		
+		
+		
+		cargarJugadores();
+		
+		
+		
+		add(inicio.atras);
+		
+		
+	}
+
+	public void cargarJugadores() {
+
+		for(int y = 0;y<10;y++) {
+			if(jugadores[y]!=null) {
+				remove(jugadores[y]);
+				
+			}
+		}
 		String[] nombre=new String[10];
 		String linea;
 		int i=0,aux=0;
-		
 		try {
 			FileReader fr=new FileReader("jugadores.txt");
 			BufferedReader out=new BufferedReader(fr);
@@ -40,6 +58,21 @@ public class Jugadores extends JPanel {
 
 				linea=out.readLine();
 				i++;
+			}
+			
+			for(int k= 0;k<10;k++) {
+				for(int l = k+1;l<10;l++) {
+					if(nombre[l]!=null && nombre[k] != null) {
+						int p1 = Integer.parseInt(nombre[l].split("-")[1]);
+						int p2 = Integer.parseInt(nombre[k].split("-")[1]);
+						if(p1>=p2) {
+							String saux = nombre[k];
+							nombre[k] = nombre[l];
+							nombre[l] = saux;
+							System.out.println("k: "+nombre[k]+" l:"+nombre[l]);
+						}
+					}
+				}
 			}
 			
 			for(int j=0;j<10;j++) {
@@ -59,9 +92,5 @@ public class Jugadores extends JPanel {
 		}catch(IOException e) {
 			
 		}
-		
-		add(inicio.atras);
-		
-		
 	}
 }

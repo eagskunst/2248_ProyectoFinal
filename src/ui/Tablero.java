@@ -141,10 +141,19 @@ public class Tablero extends JPanel implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-			if(t != null && puntajeLabel != null && tiempoDeJuego != null) {
+			if(t != null && puntajeLabel != null && tiempoDeJuego != null && !CustomTimer.isAnimating) {
 				t.stop();
+				Game2248.crearjugadores(puntajeLabel.getText().split(" ")[1]);
 				puntajeLabel.setText(PUNTAJE+"0");
 				tiempoDeJuego.setText(TIEMPO);
+				for(int i = 0;i<boxes.length;i++) {
+					String number;
+					if(i%2 == 0)
+						number = "2";
+					else
+						number = "4";
+					boxes[i].setText(number);
+				}
 				Game2248.regresar();	
 			}
 		}

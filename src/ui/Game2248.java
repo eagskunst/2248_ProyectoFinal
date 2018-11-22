@@ -121,6 +121,7 @@ public class Game2248 extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				jugador.cargarJugadores();
 				card.show(panel, "5");
 				
 				
@@ -168,24 +169,21 @@ public class Game2248 extends JFrame{
 		}else {
 			nombre=aux;
 		}
-		System.out.println(nombre);
-		crearjugadores();
-		
+		System.out.println(nombre);		
 	}
 
 
-	public static void crearjugadores() {
+	public static void crearjugadores(String puntaje) {
 		// TODO Auto-generated method stub
 		
 		File archivo=new File("jugadores.txt");
 		try {
-			
-			
+				
 				FileWriter fw=new FileWriter("jugadores.txt",true);
 				BufferedWriter bw=new BufferedWriter(fw);
 				PrintWriter selarch=new PrintWriter(bw);
 				
-				selarch.print(nombre+"\n");
+				selarch.print(nombre+"-"+puntaje+"\n");
 			
 				selarch.close();
 	

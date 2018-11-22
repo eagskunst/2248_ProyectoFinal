@@ -107,6 +107,9 @@ public class BoxMouseListener extends MouseAdapter implements MouseListener{
 			Sounds.initializePop(Sounds.POP);
 			changePuntaje();
 			CustomTimer.isAnimating = true;
+			if(sum<0) {
+				sum*=-1;
+			}
 			lastBox.setNumber(sum);
 			lastBox.setAdding(false);
 			lastBox.changeBorder(false);

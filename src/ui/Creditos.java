@@ -19,7 +19,7 @@ public class Creditos extends JPanel {
 		
 		creditos=new JLabel();
 		creditos.setBounds(170,130, 150 , 65);
-		creditos.setIcon(new ImageIcon("imagenes/colaboradores.png") );
+		creditos.setIcon(new ImageIcon("imagenes/colaboradores.png"));
 		add(creditos);
 		add(inicio.atras);
 		
