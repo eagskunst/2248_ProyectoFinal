@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import listeners.BoxMouseListener;
@@ -17,12 +18,13 @@ public class Tablero extends JPanel{
 	public Tablero() {
 		setFocusable(true);
 		configurate();
+		
 		setLayout(new FlowLayout());
 	}
 	
 	private void configurate() {
 		JPanel panel = new JPanel();
-
+		
         GridLayout layout = new GridLayout(7,5);
         layout.setHgap(10);
         layout.setVgap(10);
